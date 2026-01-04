@@ -1,28 +1,36 @@
-# CCS6344-Assignment-1
-# TT2L Group 25
+<h1>CCS6344 – Assignment 1 | TT2L Group 25</h1>
 
-📘 Subject Registration System
+<h2>📘 Subject Registration System</h2>
 
-ASP.NET Core + SQL Server
+<p><strong>Technology Stack:</strong> ASP.NET Core (Razor Pages) + Microsoft SQL Server</p>
 
-This repository contains a secure web-based Subject Registration System developed using ASP.NET Core Razor Pages and Microsoft SQL Server.
-The system includes database-level security features such as auditing, row-level security, data masking, password hashing, and session control.
+<p>
+This repository contains a secure web-based <strong>Subject Registration System</strong> developed using
+ASP.NET Core Razor Pages and Microsoft SQL Server.
+The system implements multiple database-level security features including auditing,
+row-level security (RLS), data masking, password hashing, password policy enforcement,
+and session control.
+</p>
 
-🧩 System Requirements
+<hr>
 
-Before restoring the project, ensure the following are installed:
+<h2>🧩 System Requirements</h2>
 
-Microsoft Visual Studio 2022
+<p>Before restoring the project, ensure the following are installed:</p>
 
-ASP.NET and web development workload
+<ul>
+  <li>Microsoft Visual Studio 2022</li>
+  <li>ASP.NET and Web Development workload</li>
+  <li>Microsoft SQL Server (2019 / 2022)</li>
+  <li>SQL Server Management Studio (SSMS)</li>
+  <li>.NET SDK 6.0 or later</li>
+</ul>
 
-Microsoft SQL Server (2019 / 2022)
+<hr>
 
-SQL Server Management Studio (SSMS)
+<h2>📂 Project Structure Overview</h2>
 
-.NET SDK (6.0 or above)
-
-📂 Project Structure Overview
+<pre>
 SubjectRegistrationSystem/
 │
 ├── Database Queries/
@@ -41,108 +49,133 @@ SubjectRegistrationSystem/
 │
 ├── SubjectRegistrationSystem.sln
 └── README.md
+</pre>
 
-🗄️ Step 1: Restore the Database (SSMS)
+<hr>
 
-Open SQL Server Management Studio (SSMS)
+<h2>🗄️ Step 1: Restore the Database (SSMS)</h2>
 
-Connect using Windows Authentication or sysadmin account
+<ol>
+  <li>Open <strong>SQL Server Management Studio (SSMS)</strong></li>
+  <li>Connect using <strong>Windows Authentication</strong> or a <strong>sysadmin</strong> account</li>
+  <li>Open the scripts inside the <code>Database Queries</code> folder</li>
+</ol>
 
-Open the Database Queries folder scripts in order:
+<p><strong>Run the scripts in the following exact sequence:</strong></p>
 
-Run scripts in this exact sequence:
-00_DropDatabase.sql        -- (Optional) Clean previous database
-01_CreateDatabase.sql     -- Create SubjectRegistrationDB
-02_TableCreation.sql      -- Create tables and constraints
-03_InsertSample.sql       -- Insert sample users, students, subjects
-04_OptResetData.sql       -- Optional reset script
+<ol>
+  <li>00_DropDatabase.sql</li>
+  <li>01_CreateDatabase.sql</li>
+  <li>02_TableCreation.sql</li>
+  <li>03_InsertSample.sql</li>
+  <li>04_CreateLoginsAndUsers.sql</li>
+  <li>05_AssignRolesAndPermissions.sql</li>
+  <li>06_CreateRLSFunction.sql</li>
+  <li>07_CreateRLSPolicy.sql</li>
+  <li>08_CreateAudit.sql</li>
+  <li>09_CreateServerAuditSpec.sql</li>
+  <li>10_CreateDatabaseAuditSpec.sql</li>
+  <li>11_OptResetData.sql</li>
+</ol>
 
+<hr>
 
-Verify database creation:
+<h2>🔐 Step 2: Verify Database Security (Optional but Recommended)</h2>
 
-USE SubjectRegistrationDB;
-SELECT * FROM Users;
-SELECT * FROM Subjects;
+<p>The database includes the following security implementations:</p>
 
-🔐 Step 2: Verify Database Security (Optional but Recommended)
+<ul>
+  <li>SQL logins: <code>SR_AppUser</code>, <code>SR_DBAdmin</code>, <code>SR_Auditor</code></li>
+  <li>Row-Level Security (RLS)</li>
+  <li>Server and Database Audit Specifications</li>
+  <li>Data masking on sensitive fields</li>
+  <li>Password policy enforcement</li>
+</ul>
 
-The database includes:
+<p>These can be verified in SSMS under:</p>
 
-SQL logins (SR_AppUser, SR_DBAdmin, SR_Auditor)
+<ul>
+  <li><strong>Security → Logins</strong></li>
+  <li><strong>Security → Database Audit Specifications</strong></li>
+  <li><strong>Security → Policies</strong></li>
+</ul>
 
-Row-Level Security (RLS)
+<hr>
 
-Database Audit Specifications
+<h2>🖥️ Step 3: Restore and Run the Web Application (Visual Studio)</h2>
 
-Data masking on sensitive fields
+<ol>
+  <li>Open <strong>Visual Studio 2022</strong></li>
+  <li>Select <strong>Open a project or solution</strong></li>
+  <li>Open <code>SubjectRegistrationSystem.slnx</code></li>
+  <li>Allow Visual Studio to restore NuGet packages automatically</li>
+</ol>
 
-Password policies
+<hr>
 
-You may verify using:
+<h2>🔗 Step 4: Configure Database Connection</h2>
 
-Security → Logins
+<p>
+Open <code>appsettings.json</code> and ensure the connection string matches your SQL Server instance:
+</p>
 
-Security → Database Audit Specifications
-
-Security → Policies
-
-🖥️ Step 3: Restore and Run the Web Application (Visual Studio)
-
-Open Visual Studio
-
-Select Open a project or solution
-
-Open:
-
-SubjectRegistrationSystem.sln
-
-
-Restore dependencies:
-
-Visual Studio will automatically restore NuGet packages
-
-🔗 Step 4: Configure Database Connection
-
-Open appsettings.json and ensure the connection string matches your SQL Server instance:
-
+<pre>
 "ConnectionStrings": {
-  "DefaultConnection": "Server=YOUR_SERVER_NAME;Database=SubjectRegistrationDB;Trusted_Connection=True;TrustServerCertificate=True;"
+  "DefaultConnection":
+  "Server=YOUR_SERVER_NAME;
+   Database=SubjectRegistrationDB;
+   Trusted_Connection=True;
+   TrustServerCertificate=True;"
 }
+</pre>
 
+<p>
+If SQL Authentication is used, replace <code>Trusted_Connection=True</code> with the appropriate
+username and password.
+</p>
 
-If using SQL Authentication, replace Trusted_Connection=True with username and password.
+<hr>
 
-▶️ Step 5: Run the Application
+<h2>▶️ Step 5: Run the Application</h2>
 
-Press Ctrl + F5 or click Run
+<ol>
+  <li>Press <strong>Ctrl + F5</strong> or click <strong>Run</strong></li>
+  <li>The application will launch in your browser</li>
+  <li>Login using the sample credentials inserted into the database</li>
+</ol>
 
-The application will launch in your browser
+<hr>
 
-Login using sample credentials inserted in the database
+<h2>👥 Sample User Roles</h2>
 
-👥 Sample User Roles
-Role	Description
-Admin	Manage subjects and view student registrations
-Student	Register and drop subjects
-Auditor	Read-only access for audit verification
-🔍 Step 6: Verify Security Features
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr>
+    <th>Role</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Admin</td>
+    <td>Manage subjects and view student registrations</td>
+  </tr>
+  <tr>
+    <td>Student</td>
+    <td>Register and drop subjects</td>
+  </tr>
+  <tr>
+    <td>Auditor</td>
+    <td>Read-only access for audit verification</td>
+  </tr>
+</table>
 
-Password Hashing: View hashed passwords in Users table
+<hr>
 
-Session Expiry: User is logged out after inactivity
+<h2>🔍 Step 6: Verify Security Features</h2>
 
-Row-Level Security: Students only see their own records
-
-Auditing: Login and data actions recorded in audit logs
-
-Data Masking: Sensitive fields partially hidden for non-privileged users
-
-✅ Notes for Evaluators
-
-Database scripts are provided for full restoration
-
-Security controls are implemented at database level
-
-Application uses parameterized queries to prevent SQL Injection
-
-Auditing and RLS are verifiable directly in SSMS
+<ul>
+  <li><strong>Password Hashing:</strong> Passwords are stored as hashes in the <code>Users</code> table</li>
+  <li><strong>Password Policy:</strong> Enforced via SQL Server login policies</li>
+  <li><strong>Session Expiry:</strong> Users are logged out after inactivity</li>
+  <li><strong>Row-Level Security:</strong> Students can only view their own records</li>
+  <li><strong>Auditing:</strong> Login and data access activities are recorded</li>
+  <li><strong>Data Masking:</strong> Sensitive fields are partially hidden for non-privileged users</li>
+</ul>
