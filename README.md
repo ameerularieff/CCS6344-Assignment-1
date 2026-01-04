@@ -97,7 +97,7 @@ SubjectRegistrationSystem/
 <ul>
   <li><strong>Security → Logins</strong></li>
   <li><strong>Security → Database Audit Specifications</strong></li>
-  <li><strong>Security → Policies</strong></li>
+  <li><strong>Security → Security Policies</strong></li>
 </ul>
 
 <hr>
